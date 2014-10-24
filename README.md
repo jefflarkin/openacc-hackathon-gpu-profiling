@@ -10,7 +10,7 @@ Profiler, but you will have to download the CUDA Toolkit in order to get it.
 
 ### Gathering a Timeline ###
 The `nvprof_timeline.sh` script can be used to gather a GPU timeline of your
-application. Because of the way that Cray\'s aprun command launches executables
+application. Because of the way that Cray's aprun command launches executables
 you must set the `PMI_NO_FORK` environment variable to `1` in your run script.
 Then simply add `nvprof_timeline.sh` to your run command immediately before the
 executable. This will give 1 timeline file for each node of your run. Since
