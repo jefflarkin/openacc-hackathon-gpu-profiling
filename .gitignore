@@ -1,0 +1,8 @@
+laplace2d_acc
+*.o
+*.mod
+*.lst
+core
+*.swp
+*.swo
+*~
