@@ -6,3 +6,5 @@ core
 *.swp
 *.swo
 *~
+*.cub
+*.ptx

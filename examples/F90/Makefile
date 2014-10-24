@@ -14,8 +14,19 @@
 #  limitations under the License.
 #
 
+ifneq "$(CRAY_CUDATOOLKIT_DIR)" ""
+  CUDA_HOME = $(CRAY_CUDATOOLKIT_DIR)
+endif
+
+ifeq "$(PE_ENV)" "CRAY"
+F90 = ftn
+ACCFLAGS = -rm
+CC = CC
+else
 F90       = pgf90
 ACCFLAGS = -acc -ta=nvidia -Minfo=accel
+CC = pgCC
+endif
 
 BIN =  laplace2d_acc
 
@@ -28,7 +39,7 @@ nvtx.o: ../../nvtx/nvtx.F90
 	$(F90) -c $< -o $@
 
 nvtx_wrapper.o: ../../nvtx/nvtx_wrapper.cpp
-	pgCC -c $< -o $@ -I $(CUDA_HOME)/include
+	$(CC) -c $< -o $@ -I $(CUDA_HOME)/include
 
 clean:
-	$(RM) $(BIN) *.o *.mod
+	$(RM) $(BIN) *.o *.mod *.ptx *.cub

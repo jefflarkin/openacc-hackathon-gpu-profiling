@@ -39,7 +39,7 @@ program laplace
 
   iter=0
 
-  call nvtxrangepusha('Jacobi')
+  call nvtxrangepushaargb('Jacobi',Z'FFFF0000')
 !$acc data copy(A) copyin(Anew)
   do while ( error .gt. tol .and. iter .lt. iter_max )
     error=0.0_fp_kind
@@ -61,7 +61,7 @@ program laplace
       end do
     end do
 
-    if(mod(iter,100).eq.0 ) write(*,'(i5,f10.6)'), iter, error
+    if(mod(iter,100).eq.0 ) write(*,'(i5,f10.6)') iter, error
     iter = iter +2
 
   end do
