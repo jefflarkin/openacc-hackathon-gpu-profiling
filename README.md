@@ -25,3 +25,10 @@ Additionally you may wish to gather detailed information about each kernel.
 This can be done by running a second time with the `nvprof_metrics.sh` script.
 This adds a significant amount of overhead to the run, so it should only be
 done on runs that last only a few seconds.
+
+## Importing into Visual Profiler ##
+Although Visual Profiler is available as a part of the cudatoolkit module on
+the Cray XK7 running CUDA Visual Profiler from your local machine. In order to
+load the nvprof output into Visual Profiler, use the `File -> Import` option
+and select an nvprof file as the type, then select your file. You should not
+need to change any other options. 
