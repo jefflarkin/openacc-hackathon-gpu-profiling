@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Openacc-hackathon-gpu-profiling by jefflarkin</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Openacc-hackathon-gpu-profiling</h1>
+        <h2>GPU Profiling Examples for the OpenACC Hackathon</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/jefflarkin/openacc-hackathon-gpu-profiling/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/jefflarkin/openacc-hackathon-gpu-profiling/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/jefflarkin/openacc-hackathon-gpu-profiling" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="openacc-hackathon---gpu-profiling-examples" class="anchor" href="#openacc-hackathon---gpu-profiling-examples"><span class="octicon octicon-link"></span></a>OpenACC Hackathon - GPU Profiling Examples</h1>
+
+<h2>
+<a name="gathering-profile-data-on-a-cray-xk7" class="anchor" href="#gathering-profile-data-on-a-cray-xk7"><span class="octicon octicon-link"></span></a>Gathering Profile Data on a Cray XK7</h2>
+
+<p>Two scripts have been provided in the <code>scripts</code> directory to simplify gathering
+GPU profile data on the XK7. It is generally best to visualize this data on
+your local machine using the NVIDIA CUDA Visual Profiler, which comes with the
+CUDA Toolkit. You do not need to have a CUDA-enabled GPU to use the Visual
+Profiler, but you will have to download the CUDA Toolkit in order to get it.</p>
+
+<h3>
+<a name="gathering-a-timeline" class="anchor" href="#gathering-a-timeline"><span class="octicon octicon-link"></span></a>Gathering a Timeline</h3>
+
+<p>The <code>nvprof_timeline.sh</code> script can be used to gather a GPU timeline of your
+application. Because of the way that Cray's aprun command launches executables
+you must set the <code>PMI_NO_FORK</code> environment variable to <code>1</code> in your run script.
+Then simply add <code>nvprof_timeline.sh</code> to your run command immediately before the
+executable. This will give 1 timeline file for each node of your run. Since
+most applications behave similarly on each node, you may choose to only profile
+1 process. As an example, if I wanted to profile only the final node of a 16
+node run, I would use the following command:</p>
+
+<pre><code>aprun -n 15 -N 1 ./a.out : -n 1 -N 1 ./nvprof_timeline.sh ./a.out
+</code></pre>
+
+<h3>
+<a name="gathering-metrics-for-analysis" class="anchor" href="#gathering-metrics-for-analysis"><span class="octicon octicon-link"></span></a>Gathering Metrics for Analysis</h3>
+
+<p>Additionally you may wish to gather detailed information about each kernel.
+This can be done by running a second time with the <code>nvprof_metrics.sh</code> script.
+This adds a significant amount of overhead to the run, so it should only be
+done on runs that last only a few seconds.</p>
+
+<h2>
+<a name="importing-into-visual-profiler" class="anchor" href="#importing-into-visual-profiler"><span class="octicon octicon-link"></span></a>Importing into Visual Profiler</h2>
+
+<p>Although Visual Profiler is available as a part of the cudatoolkit module on
+the Cray XK7 running CUDA Visual Profiler from your local machine. In order to
+load the nvprof output into Visual Profiler, use the <code>File -&gt; Import</code> option
+and select an nvprof file as the type, then select your file. You should not
+need to change any other options. </p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
