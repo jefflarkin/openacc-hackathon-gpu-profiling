@@ -1,5 +1,15 @@
 OpenACC Hackathon - GPU Profiling Examples
 ==========================================
+High-Level Timers on Cray XK7
+-----------------------------
+To gather high-level information about how your program is using the GPU, `nvprof` 
+print just the time spent in the kernels and data transfers. To use this command, 
+do the following.
+
+    $ export PMI_NO_FORK=1
+    $ module load cudatoolkit # If not already loaded
+    $ aprun -b nvprof ./a.out input # The executable must be in lustre.
+    
 Gathering Profile Data on a Cray XK7
 ------------------------------------
 Two scripts have been provided in the `scripts` directory to simplify gathering
